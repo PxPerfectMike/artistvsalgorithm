@@ -41,7 +41,7 @@ export default function Navbar() {
 			>
 				<BottomNavigationAction label='Photo' icon={<CameraIcon />} />
 				<BottomNavigationAction label='Video' icon={<VideocamIcon />} />
-				<BottomNavigationAction label='Home' icon={<PublicIcon />} />
+				<BottomNavigationAction active label='Home' icon={<PublicIcon />} />
 				<BottomNavigationAction label='Blog' icon={<BookIcon />} />
 				<BottomNavigationAction label='Vlog' icon={<PhotoCameraFrontIcon />} />
 			</BottomNavigation>
