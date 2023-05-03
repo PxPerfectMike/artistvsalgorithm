@@ -3,7 +3,6 @@ import { useState } from 'react';
 // import viteLogo from '/vite.svg';
 import './stylesheets/App.css';
 import { ThemeProvider } from '@emotion/react';
-import { Box, Paper, Typography } from '@mui/material';
 import { theme } from './assets/theme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -14,11 +13,8 @@ import Videog from './pages/Videog';
 import Photog from './pages/Photog';
 
 function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<ThemeProvider theme={theme}>
-			<Navbar />
 			<Router>
 				<Routes>
 					<Route path='/' element={<Home />} />
@@ -28,6 +24,7 @@ function App() {
 					<Route path='/Photog' element={<Photog />} />
 				</Routes>
 			</Router>
+			<Navbar />
 		</ThemeProvider>
 	);
 }
