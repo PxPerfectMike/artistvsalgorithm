@@ -39,11 +39,31 @@ export default function Navbar() {
 				}}
 				style={styles.navbar}
 			>
-				<BottomNavigationAction label='Photo' icon={<CameraIcon />} />
-				<BottomNavigationAction label='Video' icon={<VideocamIcon />} />
-				<BottomNavigationAction active label='Home' icon={<PublicIcon />} />
-				<BottomNavigationAction label='Blog' icon={<BookIcon />} />
-				<BottomNavigationAction label='Vlog' icon={<PhotoCameraFrontIcon />} />
+				<BottomNavigationAction
+					sx={{ color: value === 0 ? '#f5f5f5' : '#979797' }}
+					label='Photo'
+					icon={<CameraIcon />}
+				/>
+				<BottomNavigationAction
+					sx={{ color: value === 1 ? '#f5f5f5' : '#979797' }}
+					label='Video'
+					icon={<VideocamIcon />}
+				/>
+				<BottomNavigationAction
+					sx={{ color: value === 2 ? '#f5f5f5' : '#979797' }}
+					label='Home'
+					icon={<PublicIcon />}
+				/>
+				<BottomNavigationAction
+					sx={{ color: value === 3 ? '#f5f5f5' : '#979797' }}
+					label='Blog'
+					icon={<BookIcon />}
+				/>
+				<BottomNavigationAction
+					sx={{ color: value === 4 ? '#f5f5f5' : '#979797' }}
+					label='Vlog'
+					icon={<PhotoCameraFrontIcon />}
+				/>
 			</BottomNavigation>
 		</Box>
 	);
