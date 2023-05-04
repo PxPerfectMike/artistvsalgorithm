@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import HomeCard from '../components/HomeCard';
 
 function Home() {
 	const theme = useTheme();
@@ -16,6 +17,7 @@ function Home() {
 				>
 					Artist VS Algorithm
 				</Typography>
+				<HomeCard />
 			</Box>
 		</Container>
 	);

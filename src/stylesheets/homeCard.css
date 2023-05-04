@@ -1,0 +1,90 @@
+@property --rotate {
+	syntax: '<angle>';
+	initial-value: 132deg;
+	inherits: false;
+}
+
+:root {
+	--card-height: 35vh;
+	--card-width: calc(var(--card-height) / 0.9);
+}
+
+.card {
+	margin-top: 10%;
+	background: #070606;
+	/* width: var(--card-width); */
+	height: var(--card-height);
+	padding: 6px;
+	position: relative;
+	border-radius: 4px;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	display: flex;
+	font-size: 1.5em;
+	color: #f5f5f5;
+	cursor: pointer;
+	font-family: cursive;
+}
+
+.card:hover {
+	color: rgb(80, 80, 80);
+	transition: color 1s;
+	transition: border 0.1s;
+	border: 2px solid #f5f5f5cc;
+}
+.card:hover:before,
+.card:hover:after {
+	animation: none;
+	opacity: 0;
+}
+
+.card::before {
+	content: '';
+	width: 102%;
+	height: 102%;
+	border-radius: 4px;
+	background-image: linear-gradient(
+		var(--rotate),
+		#79797988,
+		#20202088 43%,
+		#07060688
+	);
+	position: absolute;
+	z-index: -1;
+	/* top: -1%; */
+	/* left: -2%; */
+	animation: spin 10s linear infinite !important;
+}
+
+.card::after {
+	position: absolute;
+	content: '';
+	top: calc(var(--card-height) / 24);
+	/* left: 0; */
+	/* right: 0; */
+	z-index: -1;
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	transform: scale(0.8);
+	filter: blur(calc(var(--card-height) / 6));
+	background-image: linear-gradient(
+		var(--rotate),
+		#ffffff88,
+		#ffffff88 43%,
+		#9f9f9f88
+	);
+	opacity: 1;
+	transition: opacity 0.5s;
+	animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		--rotate: 0deg;
+	}
+	100% {
+		--rotate: 360deg;
+	}
+}
