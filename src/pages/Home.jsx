@@ -6,7 +6,14 @@ import HomeCard from '../components/HomeCard';
 function Home() {
 	const theme = useTheme();
 	return (
-		<Container sx={{ width: '100%', height: '100%', paddingTop: '5%' }}>
+		<Container
+			sx={{
+				width: '100%',
+				height: '100%',
+				paddingTop: '5%',
+				backgroundColor: '#070606',
+			}}
+		>
 			<Box>
 				<Typography
 					variant='h4'

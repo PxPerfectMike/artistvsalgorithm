@@ -5,6 +5,7 @@ import './stylesheets/App.css';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './assets/theme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
@@ -15,6 +16,7 @@ import Photog from './pages/Photog';
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
+			<CssBaseline />
 			<Router>
 				<Routes>
 					<Route path='/' element={<Home />} />
