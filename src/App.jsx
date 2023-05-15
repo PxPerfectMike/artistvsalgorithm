@@ -1,11 +1,7 @@
-import { useState } from 'react';
-// import reactLogo from './assets/react.svg';
-// import viteLogo from '/vite.svg';
-import './stylesheets/App.css';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './assets/theme';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, Box } from '@mui/material';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
@@ -18,15 +14,24 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<Router>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/blog' element={<Blog />} />
-					<Route path='/vlog' element={<Vlog />} />
-					<Route path='/videog' element={<Videog />} />
-					<Route path='/Photog' element={<Photog />} />
-				</Routes>
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						minHeight: '100vh',
+						textAlign: 'center',
+					}}
+				>
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/blog' element={<Blog />} />
+						<Route path='/vlog' element={<Vlog />} />
+						<Route path='/videog' element={<Videog />} />
+						<Route path='/Photog' element={<Photog />} />
+					</Routes>
+					<Navbar />
+				</Box>
 			</Router>
-			<Navbar />
 		</ThemeProvider>
 	);
 }

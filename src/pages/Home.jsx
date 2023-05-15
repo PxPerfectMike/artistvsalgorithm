@@ -36,7 +36,8 @@ function Home() {
 						fontFamily: "'Julius Sans One', sans-serif",
 					}}
 				>
-					Artist VS Algorithm
+					Artist VS
+					<br /> Algorithm
 				</Typography>
 			</Box>
 			<Box sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}>

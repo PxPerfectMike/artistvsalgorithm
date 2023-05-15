@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import { Link } from 'react-router-dom';
 import CameraIcon from '@mui/icons-material/Camera';
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import PublicIcon from '@mui/icons-material/Public';
@@ -22,11 +23,7 @@ export default function Navbar() {
 	const [value, setValue] = React.useState(2);
 
 	return (
-		<Box
-			sx={{
-				width: '100%',
-			}}
-		>
+		<Box sx={{ width: '100%' }}>
 			<BottomNavigation
 				showLabels
 				value={value}
@@ -39,26 +36,36 @@ export default function Navbar() {
 					sx={{ color: value === 0 ? '#f5f5f5' : '#979797' }}
 					label='Photo'
 					icon={<CameraIcon />}
+					component={Link}
+					to='/photog'
 				/>
 				<BottomNavigationAction
 					sx={{ color: value === 1 ? '#f5f5f5' : '#979797' }}
 					label='Video'
 					icon={<VideocamIcon />}
+					component={Link}
+					to='/videog'
 				/>
 				<BottomNavigationAction
 					sx={{ color: value === 2 ? '#f5f5f5' : '#979797' }}
 					label='Home'
 					icon={<PublicIcon />}
+					component={Link}
+					to='/'
 				/>
 				<BottomNavigationAction
 					sx={{ color: value === 3 ? '#f5f5f5' : '#979797' }}
 					label='Blog'
 					icon={<BookIcon />}
+					component={Link}
+					to='/blog'
 				/>
 				<BottomNavigationAction
 					sx={{ color: value === 4 ? '#f5f5f5' : '#979797' }}
 					label='Vlog'
 					icon={<PhotoCameraFrontIcon />}
+					component={Link}
+					to='/vlog'
 				/>
 			</BottomNavigation>
 		</Box>
