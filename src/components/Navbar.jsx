@@ -15,7 +15,8 @@ const styles = {
 		bottom: 0,
 		width: '100%',
 		backgroundColor: '#070606',
-		boxShadow: '0px -2px 20px 1px #ffffff',
+		// boxShadow: '0px 0px 5px 1px #f5f5f5',
+		borderTop: '2px solid #f5f5f5',
 	},
 };
 

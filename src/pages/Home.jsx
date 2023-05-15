@@ -39,7 +39,7 @@ function Home() {
 					Artist VS Algorithm
 				</Typography>
 			</Box>
-			<Box sx={{ flexGrow: 1, marginTop: '5rem' }}>
+			<Box sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}>
 				<HomeCard />
 			</Box>
 		</Container>
