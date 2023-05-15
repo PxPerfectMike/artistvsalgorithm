@@ -3,7 +3,6 @@ import { Box, Dialog, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import cardImage from '../assets/pexels-josh-hild-12405197.jpg';
 import Zoom from '@mui/material/Zoom';
 
 function srcset(image, size, rows = 1, cols = 1) {
@@ -94,7 +93,7 @@ export default function HomeCard() {
 
 const itemData = [
 	{
-		img: cardImage,
+		img: 'https://images.unsplash.com/photo-1654541696896-bd5d8feed3fb',
 		title: 'lighthouse',
 		rows: 2,
 		cols: 4,
