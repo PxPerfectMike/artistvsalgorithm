@@ -36,12 +36,6 @@ export default function HomeCard() {
 				</ImageListItem>
 			))}
 		</ImageList>
-
-		// <>
-		// 	<div className='card'>
-		// 		<img src={cardImage} alt='card' className='card-image' />
-		// 	</div>
-		// </>
 	);
 }
 
