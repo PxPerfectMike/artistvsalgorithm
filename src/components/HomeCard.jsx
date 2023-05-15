@@ -18,7 +18,7 @@ export default function HomeCard() {
 		<ImageList
 			sx={{ width: 'auto', height: 'auto' }}
 			variant='quilted'
-			cols={1}
+			cols={4}
 			rowHeight={121}
 		>
 			{itemData.map((item) => (
