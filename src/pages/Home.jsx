@@ -20,11 +20,13 @@ function Home() {
 			<Box
 				sx={{
 					position: 'fixed',
+					top: 0,
+					left: 0,
 					width: '100%',
 					zIndex: 999,
 					backgroundColor: '#070606',
 					padding: '1rem',
-					height: 'fit-content', // Set a height to ensure it remains fixed
+					height: 'fit-content',
 				}}
 			>
 				<Typography
@@ -37,7 +39,7 @@ function Home() {
 					Artist VS Algorithm
 				</Typography>
 			</Box>
-			<Box sx={{ height: 'auto' }}>
+			<Box sx={{ flexGrow: 1, marginTop: '5rem' }}>
 				<HomeCard />
 			</Box>
 		</Container>
