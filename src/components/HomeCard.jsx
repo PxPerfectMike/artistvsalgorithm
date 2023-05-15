@@ -1,8 +1,10 @@
-import React from 'react';
-// import '../stylesheets/homeCard.css';
-import cardImage from '../assets/pexels-josh-hild-12405197.jpg';
+import React, { useState } from 'react';
+import { Box, Dialog, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import cardImage from '../assets/pexels-josh-hild-12405197.jpg';
+import Zoom from '@mui/material/Zoom';
 
 function srcset(image, size, rows = 1, cols = 1) {
 	return {
@@ -13,29 +15,80 @@ function srcset(image, size, rows = 1, cols = 1) {
 	};
 }
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+	return <Zoom ref={ref} {...props} />; // Customize the transition effect
+});
+
 export default function HomeCard() {
+	const theme = useTheme();
+	const [selectedImage, setSelectedImage] = useState(null);
+
+	const handleImageClick = (image) => {
+		setSelectedImage(image);
+	};
+
+	const handleClose = () => {
+		setSelectedImage(null);
+	};
+
 	return (
-		<ImageList
-			sx={{ width: 'auto', height: 'auto' }}
-			variant='quilted'
-			cols={4}
-			rowHeight={121}
-		>
-			{itemData.map((item) => (
-				<ImageListItem
-					key={item.img}
-					cols={item.cols || 1}
-					rows={item.rows || 1}
-					sx={{ border: '3px solid #fff' }}
+		<>
+			<ImageList
+				sx={{ width: 'auto', height: 'auto' }}
+				variant='quilted'
+				cols={4}
+				rowHeight={121}
+			>
+				{itemData.map((item) => (
+					<ImageListItem
+						key={item.img}
+						cols={item.cols || 1}
+						rows={item.rows || 1}
+						sx={{
+							border: `3px solid ${theme.palette.primary.main}`,
+						}}
+						onClick={() => handleImageClick(item.img)}
+					>
+						<img
+							{...srcset(item.img, 121, item.rows, item.cols)}
+							alt={item.title}
+							loading='lazy'
+							style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+						/>
+					</ImageListItem>
+				))}
+			</ImageList>
+			{selectedImage && (
+				<Dialog
+					open={Boolean(selectedImage)}
+					onClose={handleClose}
+					maxWidth='lg'
+					TransitionComponent={Transition}
 				>
-					<img
-						{...srcset(item.img, 121, item.rows, item.cols)}
-						alt={item.title}
-						loading='lazy'
-					/>
-				</ImageListItem>
-			))}
-		</ImageList>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							border: `3px solid ${theme.palette.primary.main}`,
+						}}
+					>
+						<img
+							{...srcset(selectedImage, 600)}
+							alt={selectedImage}
+							style={{
+								maxWidth: '100%',
+								maxHeight: '100%',
+								objectFit: 'contain',
+								cursor: 'pointer',
+								borderRadius: 'none',
+							}}
+							onClick={handleClose}
+						/>
+					</Box>
+				</Dialog>
+			)}
+		</>
 	);
 }
 
