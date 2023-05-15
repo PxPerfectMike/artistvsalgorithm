@@ -26,6 +26,7 @@ export default function HomeCard() {
 					key={item.img}
 					cols={item.cols || 1}
 					rows={item.rows || 1}
+					sx={{ border: '3px solid #fff' }}
 				>
 					<img
 						{...srcset(item.img, 121, item.rows, item.cols)}
