@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Dialog, Typography } from '@mui/material';
+import { Box, Dialog } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -51,7 +51,7 @@ export default function HomeCard() {
 						<img
 							{...srcset(item.img, 121, item.rows, item.cols)}
 							alt={item.title}
-							loading='lazy'
+							loading='eager'
 							style={{ width: '100%', height: '100%', cursor: 'pointer' }}
 						/>
 					</ImageListItem>

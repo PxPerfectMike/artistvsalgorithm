@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import CameraIcon from '@mui/icons-material/Camera';
@@ -7,7 +7,6 @@ import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import PublicIcon from '@mui/icons-material/Public';
 import BookIcon from '@mui/icons-material/Book';
 import VideocamIcon from '@mui/icons-material/Videocam';
-import { useTheme } from '@mui/material/styles';
 
 const styles = {
 	navbar: {
@@ -15,8 +14,7 @@ const styles = {
 		bottom: 0,
 		width: '100%',
 		backgroundColor: '#070606',
-		// boxShadow: '0px 0px 5px 1px #f5f5f5',
-		borderTop: '2px solid #f5f5f5',
+		borderTop: '3px solid #f5f5f5',
 	},
 };
 
