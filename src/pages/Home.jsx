@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import HomeCard from '../components/HomeCard';
 
 function Home() {
 	const theme = useTheme();
+
 	return (
 		<Container
 			sx={{
@@ -27,6 +29,9 @@ function Home() {
 					backgroundColor: '#070606',
 					padding: '1rem',
 					height: 'fit-content',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-around',
 				}}
 			>
 				<Typography
@@ -39,7 +44,11 @@ function Home() {
 					Artist VS
 					<br /> Algorithm
 				</Typography>
+				<Instagram sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+				<Twitter sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+				<Facebook sx={{ marginLeft: '1rem', color: '#ffffff' }} />
 			</Box>
+
 			<Box sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}>
 				<HomeCard />
 			</Box>
