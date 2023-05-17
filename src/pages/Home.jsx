@@ -14,7 +14,7 @@ function Home() {
 				position: 'relative',
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'center',
+				alignItems: 'flex-start',
 			}}
 		>
 			<Box

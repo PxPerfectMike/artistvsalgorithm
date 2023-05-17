@@ -19,7 +19,7 @@ function App() {
 						display: 'flex',
 						flexDirection: 'column',
 						minHeight: '100vh',
-						textAlign: 'center',
+						textAlign: 'start',
 					}}
 				>
 					<Routes>
