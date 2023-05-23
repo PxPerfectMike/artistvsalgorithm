@@ -93,8 +93,9 @@ const itemData = [
 		cols: 4,
 	},
 	{
-		video: 'http://techslides.com/demos/samples/sample.mp4',
-		title: 'Toy Sample',
+		video:
+			'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+		title: 'Sintel',
 		rows: 2,
 		cols: 4,
 	},
