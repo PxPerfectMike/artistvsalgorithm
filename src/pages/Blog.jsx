@@ -1,10 +1,12 @@
 import React from 'react';
+import { Container } from '@mui/material';
+import TitleTop from '../components/TitleTop';
 
 function Blog() {
 	return (
-		<div>
-			<h1>Blog</h1>
-		</div>
+		<Container>
+			<TitleTop />
+		</Container>
 	);
 }
 
