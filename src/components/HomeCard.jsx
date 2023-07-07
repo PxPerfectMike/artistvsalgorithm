@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Dialog } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -15,7 +15,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Zoom ref={ref} {...props} />; // Customize the transition effect
+	return <Zoom ref={ref} {...props} />;
 });
 
 export default function HomeCard() {
@@ -38,22 +38,39 @@ export default function HomeCard() {
 				cols={4}
 				rowHeight={121}
 			>
-				{itemData.map((item) => (
+				{itemData.map((item, index) => (
 					<ImageListItem
-						key={item.img}
+						key={item.img || index}
 						cols={item.cols || 1}
 						rows={item.rows || 1}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
 						}}
-						onClick={() => handleImageClick(item.img)}
+						onClick={() => item.img && handleImageClick(item.img)}
 					>
-						<img
-							{...srcset(item.img, 121, item.rows, item.cols)}
-							alt={item.title}
-							loading='eager'
-							style={{ width: '100%', height: '100%', cursor: 'pointer' }}
-						/>
+						{item.type === 'text' ? (
+							<Typography
+								variant='h5'
+								color='primary'
+								sx={{ padding: '1rem' }}
+							>
+								{item.text.substring(0, 200)}
+							</Typography>
+						) : (
+							<img
+								{...srcset(item.img, 121, item.rows, item.cols)}
+								alt={item.title}
+								loading='eager'
+								style={{
+									width: '100%',
+									height: '100%',
+									cursor: 'pointer',
+								}}
+							/>
+						)}
 					</ImageListItem>
 				))}
 			</ImageList>
@@ -92,6 +109,13 @@ export default function HomeCard() {
 }
 
 const itemData = [
+	{
+		type: 'text',
+		text: 'This is where the home page text goes.',
+		title: 'Home page description',
+		rows: 2,
+		cols: 4,
+	},
 	{
 		img: 'https://images.unsplash.com/photo-1654541696896-bd5d8feed3fb',
 		title: 'lighthouse',
