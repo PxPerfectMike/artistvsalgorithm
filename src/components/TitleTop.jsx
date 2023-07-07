@@ -14,7 +14,7 @@ function TitleTop() {
 				position: 'relative',
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'flex-start',
+				alignItems: 'center',
 			}}
 		>
 			<Box
@@ -28,6 +28,7 @@ function TitleTop() {
 					padding: '1rem',
 					height: 'fit-content',
 					display: 'flex',
+					flexDirection: 'column',
 					alignItems: 'center',
 					justifyContent: 'space-around',
 				}}
@@ -37,14 +38,26 @@ function TitleTop() {
 					sx={{
 						color: theme.palette.primary.main,
 						fontFamily: "'Julius Sans One', sans-serif",
+						textAlign: 'center',
+						marginTop: '0.2rem',
+						whiteSpace: 'nowrap',
 					}}
 				>
-					Artist VS
-					<br /> Algorithm
+					Artist VS Algorithm
 				</Typography>
-				<Instagram sx={{ marginLeft: '1rem', color: '#ffffff' }} />
-				<Twitter sx={{ marginLeft: '1rem', color: '#ffffff' }} />
-				<Facebook sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+				<Box
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						justifyContent: 'center',
+						alignItems: 'center',
+						marginTop: '1rem',
+					}}
+				>
+					<Instagram sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+					<Twitter sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+					<Facebook sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+				</Box>
 			</Box>
 		</Container>
 	);

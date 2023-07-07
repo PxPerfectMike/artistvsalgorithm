@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CameraIcon from '@mui/icons-material/Camera';
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import PublicIcon from '@mui/icons-material/Public';
@@ -20,7 +20,34 @@ const styles = {
 };
 
 export default function Navbar() {
-	const [value, setValue] = React.useState(2);
+	const { pathname } = useLocation();
+
+	let initialValue;
+	switch (pathname) {
+		case '/photog':
+			initialValue = 0;
+			break;
+		case '/videog':
+			initialValue = 1;
+			break;
+		case '/':
+			initialValue = 2;
+			break;
+		case '/blog':
+			initialValue = 3;
+			break;
+		case '/vlog':
+			initialValue = 4;
+			break;
+		default:
+			initialValue = 2;
+	}
+
+	const [value, setValue] = React.useState(initialValue);
+
+	React.useEffect(() => {
+		setValue(initialValue);
+	}, [pathname]); // update value when pathname changes
 
 	return (
 		<Box sx={{ width: '100%' }}>
