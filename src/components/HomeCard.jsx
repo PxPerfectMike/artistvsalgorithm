@@ -55,7 +55,7 @@ export default function HomeCard() {
 						rows={item.rows || 1}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
-							padding: 2,
+							// padding: 0.5,
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
@@ -97,7 +97,7 @@ export default function HomeCard() {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							padding: 1,
+							padding: 0.6,
 							border: `1px solid ${theme.palette.primary.main}`,
 						}}
 					>

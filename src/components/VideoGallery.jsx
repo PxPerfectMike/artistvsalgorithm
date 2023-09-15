@@ -51,7 +51,7 @@ export default function VideoGallery() {
 			>
 				{itemData.map((item) => (
 					<ImageListItem
-						key={item.video}
+						key={item.title}
 						cols={item.cols || 1}
 						rows={item.rows || 1}
 						sx={{
@@ -166,6 +166,27 @@ const itemData = [
 	{
 		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
 		title: 'Elephant Dream',
+		description: 'This is a description for Elephant Dream.',
+		rows: 2,
+		cols: 4,
+	},
+	{
+		video: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
+		title: 'Big Buck Bunny c',
+		description: 'This is a description for Big Buck Bunny.',
+		rows: 2,
+		cols: 4,
+	},
+	{
+		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+		title: 'Sintel c',
+		description: 'This is a description for Sintel.',
+		rows: 2,
+		cols: 4,
+	},
+	{
+		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+		title: 'Elephant Dream c',
 		description: 'This is a description for Elephant Dream.',
 		rows: 2,
 		cols: 4,

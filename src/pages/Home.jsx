@@ -1,13 +1,10 @@
 import React from 'react';
-import { Container, Box, Typography } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 import HomeCard from '../components/HomeCard';
 import TitleTop from '../components/TitleTop';
 
 function Home() {
-	const theme = useTheme();
-
 	return (
 		<Container
 			sx={{
