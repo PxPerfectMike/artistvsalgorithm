@@ -20,6 +20,7 @@ function App() {
 						flexDirection: 'column',
 						minHeight: '100vh',
 						textAlign: 'start',
+						backgroundColor: '#070606',
 					}}
 				>
 					<Routes>

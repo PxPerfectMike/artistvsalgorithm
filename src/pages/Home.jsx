@@ -17,12 +17,12 @@ function Home() {
 				position: 'relative',
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'flex-start',
+				alignItems: 'center',
 			}}
 		>
 			<TitleTop />
 
-			<Box sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}>
+			<Box sx={{ flexGrow: 1, marginTop: '8rem', marginBottom: '4rem' }}>
 				<HomeCard />
 			</Box>
 		</Container>

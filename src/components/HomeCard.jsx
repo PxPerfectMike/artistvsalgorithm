@@ -33,7 +33,17 @@ export default function HomeCard() {
 	return (
 		<>
 			<ImageList
-				sx={{ width: 'auto', height: 'auto' }}
+				sx={{
+					width: 'auto',
+					height: 'auto',
+					'@media (min-width: 600px)': {
+						cols: 5,
+						rowHeight: 160,
+					},
+					'@media (min-width: 900px)': {
+						cols: 6,
+					},
+				}}
 				variant='quilted'
 				cols={4}
 				rowHeight={121}
@@ -45,6 +55,7 @@ export default function HomeCard() {
 						rows={item.rows || 1}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
+							padding: 2,
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
@@ -53,11 +64,11 @@ export default function HomeCard() {
 					>
 						{item.type === 'text' ? (
 							<Typography
-								variant='h5'
+								variant='h6'
 								color='primary'
 								sx={{ padding: '1rem' }}
 							>
-								{item.text.substring(0, 200)}
+								{item.text}
 							</Typography>
 						) : (
 							<img
@@ -86,7 +97,8 @@ export default function HomeCard() {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							border: `3px solid ${theme.palette.primary.main}`,
+							padding: 1,
+							border: `1px solid ${theme.palette.primary.main}`,
 						}}
 					>
 						<img
@@ -97,7 +109,6 @@ export default function HomeCard() {
 								maxHeight: '100%',
 								objectFit: 'contain',
 								cursor: 'pointer',
-								borderRadius: 'none',
 							}}
 							onClick={handleClose}
 						/>

@@ -11,6 +11,7 @@ import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Zoom from '@mui/material/Zoom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Zoom ref={ref} {...props} />;
@@ -20,6 +21,7 @@ export default function VideoGallery() {
 	const theme = useTheme();
 	const [selectedVideo, setSelectedVideo] = useState(null);
 	const [description, setDescription] = useState(null);
+	const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
 	const handleVideoClick = (video) => {
 		setSelectedVideo(video);
@@ -37,9 +39,14 @@ export default function VideoGallery() {
 	return (
 		<>
 			<ImageList
-				sx={{ width: 'auto', height: 'auto', overflow: 'hidden' }}
+				sx={{
+					width: '100%',
+					height: 'auto',
+					overflow: 'hidden',
+					backgroundColor: '#070606',
+				}}
 				variant='quilted'
-				cols={4}
+				cols={isDesktop ? 12 : 4} // For desktop use 6 columns, for mobile keep it at 4
 				rowHeight={121}
 			>
 				{itemData.map((item) => (
@@ -50,6 +57,7 @@ export default function VideoGallery() {
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							position: 'relative',
+							margin: theme.spacing(1), // Add some margin
 						}}
 						onClick={() => handleVideoClick(item.video)}
 					>
@@ -114,9 +122,10 @@ export default function VideoGallery() {
 						<video
 							src={selectedVideo}
 							style={{
+								minHeight: '180px',
 								maxWidth: '100%',
 								maxHeight: '80vh',
-								objectFit: 'contain',
+								objectFit: 'cover',
 								cursor: 'pointer',
 								borderRadius: 'none',
 							}}
