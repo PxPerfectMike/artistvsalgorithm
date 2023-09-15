@@ -7,17 +7,20 @@ function Photog() {
 	return (
 		<Container
 			sx={{
-				width: '100%',
+				width: { xs: '100%', md: '90%' }, // Adapt width for medium devices and above
+				margin: '0 auto', // Center the container
 				height: '100%',
 				backgroundColor: '#070606',
 				position: 'relative',
 				display: 'flex',
 				flexDirection: 'column',
-				alignItems: 'flex-start',
+				alignItems: 'center',
 			}}
 		>
 			<TitleTop />
-			<Box sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}>
+			<Box
+				sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}
+			>
 				<PhotoGallery />
 			</Box>
 		</Container>
