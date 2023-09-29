@@ -16,44 +16,41 @@ import { createClient } from 'contentful';
 
 const client = createClient({
 	space: '9yyxpwjpu8ht',
-	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
+	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4', // Replace with your actual access token
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Zoom ref={ref} {...props} />;
 });
 
-export default function VideoGallery() {
+export default function VlogPost() {
 	const theme = useTheme();
 	const [itemData, setItemData] = useState([]);
 	const [selectedVideo, setSelectedVideo] = useState(null);
-	const [description, setDescription] = useState(null);
 	const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
 	useEffect(() => {
 		client
 			.getEntries({
-				content_type: 'videoPost',
+				content_type: 'vlogPost',
 				include: 5,
 			})
 			.then((response) => {
 				const initialItemData = response.items.map((entry) => {
 					const videoUrl =
-						'https:' + entry.fields.videoContent.fields.file.url;
+						'https:' + entry.fields.media.fields.file.url;
 					return {
 						video: videoUrl,
 						title: entry.fields.title,
-						description:
-							entry.fields.description.content[0].content[0]
-								.value,
 						order: entry.fields.order,
 					};
 				});
-
 				initialItemData.sort((a, b) => a.order - b.order);
 				setItemData(initialItemData);
 			})
-			.catch(console.error);
+			.catch((error) => {
+				console.error('Error fetching data from Contentful: ', error);
+			});
 	}, []);
 
 	const handleVideoClick = (video) => {
@@ -62,11 +59,6 @@ export default function VideoGallery() {
 
 	const handleClose = () => {
 		setSelectedVideo(null);
-		setDescription(null);
-	};
-
-	const handleDescriptionOpen = (description) => {
-		setDescription(description);
 	};
 
 	return (
@@ -79,18 +71,18 @@ export default function VideoGallery() {
 					backgroundColor: '#070606',
 				}}
 				variant='quilted'
-				cols={isDesktop ? 12 : 4} // For desktop use 6 columns, for mobile keep it at 4
+				cols={isDesktop ? 12 : 4}
 				rowHeight={121}
 			>
 				{itemData.map((item) => (
 					<ImageListItem
 						key={item.title}
 						cols={item.cols || 4}
-						rows={item.rows || 1.5}
+						rows={item.rows || 1.6}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							position: 'relative',
-							margin: theme.spacing(1), // Add some margin
+							margin: theme.spacing(1),
 							overflow: 'hidden',
 						}}
 						onClick={() => handleVideoClick(item.video)}
@@ -100,8 +92,8 @@ export default function VideoGallery() {
 							title={item.title}
 							style={{
 								width: '100%',
-								height: '100%',
-								objectFit: 'cover',
+								height: '100%', // Add this line to set height to 100%
+								objectFit: 'cover', // Add this line to set objectFit to cover
 								cursor: 'pointer',
 							}}
 							loop
@@ -111,8 +103,8 @@ export default function VideoGallery() {
 						<Box
 							sx={{
 								position: 'absolute',
-								bottom: 5,
-								left: 5,
+								bottom: 10,
+								left: 10,
 								width: 'auto',
 								backgroundColor: 'rgb(255, 255, 255)',
 								color: 'black',
@@ -122,27 +114,13 @@ export default function VideoGallery() {
 								alignItems: 'center',
 							}}
 						>
-							<Typography variant='subtitle1'>
+							<Typography
+								variant='subtitle1'
+								sx={{ width: '100%', textAlign: 'center' }}
+							>
 								{item.title}
 							</Typography>
 						</Box>
-						<Button
-							variant='outlined'
-							sx={{
-								position: 'absolute',
-								top: 5,
-								right: 5,
-								backgroundColor: 'white',
-							}}
-							size='small'
-							color='text'
-							onClick={(event) => {
-								event.stopPropagation();
-								handleDescriptionOpen(item.description);
-							}}
-						>
-							Details
-						</Button>
 					</ImageListItem>
 				))}
 			</ImageList>
@@ -172,21 +150,12 @@ export default function VideoGallery() {
 								borderRadius: 'none',
 							}}
 							controls
-							onClick={handleClose}
 							autoPlay
+							onClick={handleClose}
 						/>
 					</Box>
 				</Dialog>
 			)}
-			<Dialog
-				open={Boolean(description)}
-				onClose={() => setDescription(null)}
-			>
-				<DialogTitle>Description</DialogTitle>
-				<DialogContent>
-					<Typography>{description}</Typography>
-				</DialogContent>
-			</Dialog>
 		</>
 	);
 }

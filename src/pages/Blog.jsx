@@ -1,13 +1,27 @@
 import React from 'react';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import BlogPost from '../components/BlogPost';
 import TitleTop from '../components/TitleTop';
 
-function Blog() {
+export default function Blog() {
 	return (
-		<Container>
+		<Container
+			sx={{
+				width: '100%',
+				height: '100%',
+				backgroundColor: '#070606',
+				position: 'relative',
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+			}}
+		>
 			<TitleTop />
+
+			<Box sx={{ flexGrow: 1, marginTop: '8rem', marginBottom: '4rem' }}>
+				<BlogPost />
+			</Box>
 		</Container>
 	);
 }
-
-export default Blog;

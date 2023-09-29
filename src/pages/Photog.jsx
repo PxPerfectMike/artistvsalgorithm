@@ -18,9 +18,7 @@ function Photog() {
 			}}
 		>
 			<TitleTop />
-			<Box
-				sx={{ flexGrow: 1, marginTop: '6.3rem', marginBottom: '3rem' }}
-			>
+			<Box sx={{ flexGrow: 1, marginTop: '8rem', marginBottom: '3rem' }}>
 				<PhotoGallery />
 			</Box>
 		</Container>

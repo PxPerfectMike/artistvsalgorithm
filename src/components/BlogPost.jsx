@@ -5,6 +5,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Zoom from '@mui/material/Zoom';
 import { createClient } from 'contentful';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 const client = createClient({
 	space: '9yyxpwjpu8ht',
@@ -12,18 +13,7 @@ const client = createClient({
 	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
 });
 
-function srcset(image) {
-	return {
-		src: image,
-		alt: image,
-	};
-}
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Zoom ref={ref} {...props} />;
-});
-
-export default function HomeCard() {
+export default function BlogPost() {
 	const theme = useTheme();
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [itemData, setItemData] = useState([]);
@@ -31,35 +21,18 @@ export default function HomeCard() {
 	useEffect(() => {
 		client
 			.getEntries({
-				content_type: 'blogPost',
-				include: 1,
+				content_type: 'blogPagePost',
+				include: 5,
 			})
 			.then((response) => {
-				let initialItemData = response.items.map((entry) => {
-					if (entry.fields.type === 'image') {
-						const imageUrl =
-							'https:' + entry.fields.media.fields.file.url;
-						return {
-							type: 'image',
-							img: imageUrl,
-							title: entry.fields.title,
-							rows: entry.fields.rows,
-							cols: entry.fields.columns,
-							order: entry.fields.order,
-						};
-					} else {
-						return {
-							type: 'text',
-							text: entry.fields.homePost,
-							title: entry.fields.title,
-							rows: entry.fields.rows,
-							cols: entry.fields.columns,
-							order: entry.fields.order,
-						};
-					}
+				const initialItemData = response.items.map((entry) => {
+					return {
+						type: 'text',
+						text: entry.fields.blogPost,
+						order: entry.fields.order,
+					};
 				});
 
-				// Sort by the 'order' field
 				initialItemData.sort((a, b) => a.order - b.order);
 
 				setItemData(initialItemData);
@@ -95,9 +68,9 @@ export default function HomeCard() {
 			>
 				{itemData.map((item, index) => (
 					<ImageListItem
-						key={item.img || index}
-						cols={item.cols || 1}
-						rows={item.rows || 1}
+						key={index}
+						cols={item.cols || 4}
+						rows={item.rows || item.text.length / 100}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							display: 'flex',
@@ -116,11 +89,11 @@ export default function HomeCard() {
 									textAlign: 'center',
 								}}
 							>
-								{item.text}
+								{documentToReactComponents(item.text)}
 							</Typography>
 						) : (
 							<img
-								{...srcset(item.img, 121, item.rows, item.cols)}
+								{...srcset(item.img)}
 								alt={item.title}
 								loading='eager'
 								style={{
@@ -150,7 +123,7 @@ export default function HomeCard() {
 						}}
 					>
 						<img
-							{...srcset(selectedImage, 600)}
+							{...srcset(selectedImage)}
 							alt={selectedImage}
 							style={{
 								maxWidth: '100%',

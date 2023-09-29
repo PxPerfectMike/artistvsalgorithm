@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
 
 function TitleTop() {
 	const theme = useTheme();
+
+	useEffect(() => {
+		scaleTitleWithScreenWidth();
+	}, []);
+	function scaleTitleWithScreenWidth() {
+		const title = document.querySelector('h4');
+		const screenWidth = window.innerWidth;
+		if (screenWidth < 281) {
+			title.style.fontSize = '1.2rem';
+		} else if (screenWidth < 800) {
+			title.style.fontSize = '2rem';
+		} else if (screenWidth < 1280) {
+			title.style.fontSize = '3rem';
+		}
+	}
+
 	return (
 		<Container
 			sx={{
@@ -41,6 +57,7 @@ function TitleTop() {
 						textAlign: 'center',
 						marginTop: '0.2rem',
 						whiteSpace: 'nowrap',
+						fontSize: '2.5rem',
 					}}
 				>
 					Artist VS Algorithm
@@ -54,9 +71,33 @@ function TitleTop() {
 						marginTop: '1rem',
 					}}
 				>
-					<Instagram sx={{ marginLeft: '1rem', color: '#ffffff' }} />
-					<Twitter sx={{ marginLeft: '1rem', color: '#ffffff' }} />
-					<Facebook sx={{ marginLeft: '1rem', color: '#ffffff' }} />
+					<a
+						href='https://www.instagram.com/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<Instagram
+							sx={{ marginLeft: '1rem', color: '#ffffff' }}
+						/>
+					</a>
+					<a
+						href='https://twitter.com/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<Twitter
+							sx={{ marginLeft: '1rem', color: '#ffffff' }}
+						/>
+					</a>
+					<a
+						href='https://www.facebook.com/'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<Facebook
+							sx={{ marginLeft: '1rem', color: '#ffffff' }}
+						/>
+					</a>
 				</Box>
 			</Box>
 		</Container>

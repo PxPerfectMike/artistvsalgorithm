@@ -9,45 +9,26 @@ import PublicIcon from '@mui/icons-material/Public';
 import BookIcon from '@mui/icons-material/Book';
 import VideocamIcon from '@mui/icons-material/Videocam';
 
-const styles = {
-	navbar: {
-		position: 'fixed',
-		bottom: 0,
-		width: '100%',
-		backgroundColor: '#070606',
-		borderTop: '3px solid #f5f5f5',
-	},
-};
+const navItems = [
+	{ label: 'Photo', icon: <CameraIcon />, link: '/photog' },
+	{ label: 'Video', icon: <VideocamIcon />, link: '/videog' },
+	{ label: 'Home', icon: <PublicIcon />, link: '/' },
+	{ label: 'Blog', icon: <BookIcon />, link: '/blog' },
+	{ label: 'Vlog', icon: <PhotoCameraFrontIcon />, link: '/vlog' },
+];
 
 export default function Navbar() {
 	const { pathname } = useLocation();
-
-	let initialValue;
-	switch (pathname) {
-		case '/photog':
-			initialValue = 0;
-			break;
-		case '/videog':
-			initialValue = 1;
-			break;
-		case '/':
-			initialValue = 2;
-			break;
-		case '/blog':
-			initialValue = 3;
-			break;
-		case '/vlog':
-			initialValue = 4;
-			break;
-		default:
-			initialValue = 2;
-	}
+	const initialValue =
+		navItems.findIndex((item) => item.link === pathname) || 2;
 
 	const [value, setValue] = React.useState(initialValue);
 
 	React.useEffect(() => {
-		setValue(initialValue);
-	}, [pathname]); // update value when pathname changes
+		const newIndex =
+			navItems.findIndex((item) => item.link === pathname) || 2;
+		setValue(newIndex);
+	}, [pathname]);
 
 	return (
 		<Box sx={{ width: '100%' }}>
@@ -57,43 +38,27 @@ export default function Navbar() {
 				onChange={(event, newValue) => {
 					setValue(newValue);
 				}}
-				style={styles.navbar}
+				sx={{
+					position: 'fixed',
+					bottom: 0,
+					width: '100%',
+					backgroundColor: '#070606',
+					borderTop: '3px solid #f5f5f5',
+				}}
 			>
-				<BottomNavigationAction
-					sx={{ color: value === 0 ? '#f5f5f5' : '#979797' }}
-					label='Photo'
-					icon={<CameraIcon />}
-					component={Link}
-					to='/photog'
-				/>
-				<BottomNavigationAction
-					sx={{ color: value === 1 ? '#f5f5f5' : '#979797' }}
-					label='Video'
-					icon={<VideocamIcon />}
-					component={Link}
-					to='/videog'
-				/>
-				<BottomNavigationAction
-					sx={{ color: value === 2 ? '#f5f5f5' : '#979797' }}
-					label='Home'
-					icon={<PublicIcon />}
-					component={Link}
-					to='/'
-				/>
-				<BottomNavigationAction
-					sx={{ color: value === 3 ? '#f5f5f5' : '#979797' }}
-					label='Blog'
-					icon={<BookIcon />}
-					component={Link}
-					to='/blog'
-				/>
-				<BottomNavigationAction
-					sx={{ color: value === 4 ? '#f5f5f5' : '#979797' }}
-					label='Vlog'
-					icon={<PhotoCameraFrontIcon />}
-					component={Link}
-					to='/vlog'
-				/>
+				{navItems.map((item, index) => (
+					<BottomNavigationAction
+						key={index}
+						sx={{
+							color: value === index ? '#f5f5f5' : '#979797',
+							minWidth: 0,
+						}}
+						label={item.label}
+						icon={item.icon}
+						component={Link}
+						to={item.link}
+					/>
+				))}
 			</BottomNavigation>
 		</Box>
 	);

@@ -27,7 +27,7 @@ function Videog() {
 				sx={{
 					flexGrow: 1,
 					width: '100%',
-					marginTop: '6.3rem',
+					marginTop: '7rem',
 					marginBottom: '3rem',
 					justifyContent: 'center',
 				}}

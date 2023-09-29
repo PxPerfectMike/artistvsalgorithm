@@ -1,10 +1,9 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import HomeCard from '../components/HomeCard';
 import TitleTop from '../components/TitleTop';
 
-function Home() {
+export default function Home() {
 	return (
 		<Container
 			sx={{
@@ -25,5 +24,3 @@ function Home() {
 		</Container>
 	);
 }
-
-export default Home;
