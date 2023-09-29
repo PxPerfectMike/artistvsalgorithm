@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Box,
 	Dialog,
@@ -12,6 +12,12 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Zoom from '@mui/material/Zoom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { createClient } from 'contentful';
+
+const client = createClient({
+	space: '9yyxpwjpu8ht',
+	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
+});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Zoom ref={ref} {...props} />;
@@ -19,9 +25,36 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function VideoGallery() {
 	const theme = useTheme();
+	const [itemData, setItemData] = useState([]);
 	const [selectedVideo, setSelectedVideo] = useState(null);
 	const [description, setDescription] = useState(null);
 	const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
+	useEffect(() => {
+		client
+			.getEntries({
+				content_type: 'videoPost',
+				include: 5,
+			})
+			.then((response) => {
+				const initialItemData = response.items.map((entry) => {
+					const videoUrl =
+						'https:' + entry.fields.videoContent.fields.file.url;
+					return {
+						video: videoUrl,
+						title: entry.fields.title,
+						description:
+							entry.fields.description.content[0].content[0]
+								.value,
+						order: entry.fields.order,
+					};
+				});
+
+				initialItemData.sort((a, b) => a.order - b.order);
+				setItemData(initialItemData);
+			})
+			.catch(console.error);
+	}, []);
 
 	const handleVideoClick = (video) => {
 		setSelectedVideo(video);
@@ -52,8 +85,8 @@ export default function VideoGallery() {
 				{itemData.map((item) => (
 					<ImageListItem
 						key={item.title}
-						cols={item.cols || 1}
-						rows={item.rows || 1}
+						cols={item.cols || 4}
+						rows={item.rows || 2}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							position: 'relative',
@@ -66,7 +99,6 @@ export default function VideoGallery() {
 							title={item.title}
 							style={{
 								width: '100%',
-								height: '100%',
 								cursor: 'pointer',
 							}}
 							loop
@@ -80,7 +112,7 @@ export default function VideoGallery() {
 								width: '100%',
 								backgroundColor: 'rgb(255, 255, 255)',
 								color: 'black',
-								padding: '5px',
+								padding: '0.55rem',
 								display: 'flex',
 								justifyContent: 'space-between',
 								alignItems: 'center',
@@ -147,48 +179,3 @@ export default function VideoGallery() {
 		</>
 	);
 }
-
-const itemData = [
-	{
-		video: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-		title: 'Big Buck Bunny',
-		description: 'This is a description for Big Buck Bunny.',
-		rows: 2,
-		cols: 4,
-	},
-	{
-		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-		title: 'Sintel',
-		description: 'This is a description for Sintel.',
-		rows: 2,
-		cols: 4,
-	},
-	{
-		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-		title: 'Elephant Dream',
-		description: 'This is a description for Elephant Dream.',
-		rows: 2,
-		cols: 4,
-	},
-	{
-		video: 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
-		title: 'Big Buck Bunny c',
-		description: 'This is a description for Big Buck Bunny.',
-		rows: 2,
-		cols: 4,
-	},
-	{
-		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-		title: 'Sintel c',
-		description: 'This is a description for Sintel.',
-		rows: 2,
-		cols: 4,
-	},
-	{
-		video: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-		title: 'Elephant Dream c',
-		description: 'This is a description for Elephant Dream.',
-		rows: 2,
-		cols: 4,
-	},
-];
