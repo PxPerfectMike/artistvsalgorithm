@@ -6,10 +6,9 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Zoom from '@mui/material/Zoom';
 import { createClient } from 'contentful';
 
-// Initialize Contentful client
 const client = createClient({
 	space: '9yyxpwjpu8ht',
-	environment: 'master', // defaults to 'master' if not set
+	environment: 'master',
 	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
 });
 
@@ -33,18 +32,35 @@ export default function HomeCard() {
 
 	useEffect(() => {
 		client
-			.getEntry('2HAYg2vt4vsi8BZOyahFvA')
-			.then((entry) => {
-				const initialItemData = [
-					{
-						type: entry.fields.type,
-						text: entry.fields.homePost,
-						title: entry.fields.title,
-						rows: entry.fields.rows,
-						cols: entry.fields.columns,
-					},
-				];
-				setItemData(initialItemData);
+			.getEntries({
+				content_type: 'blogPost',
+				include: 5,
+			})
+			.then((response) => {
+				const initialItemData = response.items.map((entry) => {
+					if (entry.fields.type === 'image') {
+						const imageUrl =
+							'https:' + entry.fields.media.fields.file.url; // Added 'https:'
+						console.log('media url ' + imageUrl);
+						return {
+							type: 'image',
+							img: imageUrl,
+							title: entry.fields.title,
+							rows: entry.fields.rows,
+							cols: entry.fields.columns,
+						};
+					} else {
+						return {
+							type: 'text',
+							text: entry.fields.homePost,
+							title: entry.fields.title,
+							rows: entry.fields.rows,
+							cols: entry.fields.columns,
+						};
+					}
+				});
+				const reversedItemData = [...initialItemData].reverse();
+				setItemData(reversedItemData);
 			})
 			.catch(console.error);
 	}, []);
@@ -82,7 +98,6 @@ export default function HomeCard() {
 						rows={item.rows || 1}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
-							// padding: 0.5,
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
