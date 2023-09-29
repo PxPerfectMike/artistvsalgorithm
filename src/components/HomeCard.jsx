@@ -12,12 +12,10 @@ const client = createClient({
 	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
 });
 
-function srcset(image, size, rows = 1, cols = 1) {
+function srcset(image) {
 	return {
-		src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-		srcSet: `${image}?w=${size * cols}&h=${
-			size * rows
-		}&fit=crop&auto=format&dpr=2 2x`,
+		src: image,
+		alt: image,
 	};
 }
 
@@ -37,17 +35,17 @@ export default function HomeCard() {
 				include: 5,
 			})
 			.then((response) => {
-				const initialItemData = response.items.map((entry) => {
+				let initialItemData = response.items.map((entry) => {
 					if (entry.fields.type === 'image') {
 						const imageUrl =
-							'https:' + entry.fields.media.fields.file.url; // Added 'https:'
-						console.log('media url ' + imageUrl);
+							'https:' + entry.fields.media.fields.file.url;
 						return {
 							type: 'image',
 							img: imageUrl,
 							title: entry.fields.title,
 							rows: entry.fields.rows,
 							cols: entry.fields.columns,
+							order: entry.fields.order,
 						};
 					} else {
 						return {
@@ -56,11 +54,15 @@ export default function HomeCard() {
 							title: entry.fields.title,
 							rows: entry.fields.rows,
 							cols: entry.fields.columns,
+							order: entry.fields.order,
 						};
 					}
 				});
-				const reversedItemData = [...initialItemData].reverse();
-				setItemData(reversedItemData);
+
+				// Sort by the 'order' field
+				initialItemData.sort((a, b) => a.order - b.order);
+
+				setItemData(initialItemData);
 			})
 			.catch(console.error);
 	}, []);
