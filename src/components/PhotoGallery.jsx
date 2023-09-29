@@ -1,28 +1,51 @@
-import React, { useState } from 'react';
-import { Box, Dialog } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
+import { Box, Dialog, useTheme } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Zoom from '@mui/material/Zoom';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { createClient } from 'contentful';
 
-function srcset(image, size, rows = 1, cols = 1) {
-	return {
-		src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-		srcSet: `${image}?w=${size * cols}&h=${
-			size * rows
-		}&fit=crop&auto=format&dpr=2 2x`,
-	};
-}
+const client = createClient({
+	space: '9yyxpwjpu8ht',
+	environment: 'master',
+	accessToken: 'r2_gghUds_gCqXDe6eSc7_o9vhKQ8iplFRsWNZU_UU4',
+});
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Zoom ref={ref} {...props} />; // Customize the transition effect
+	return <Zoom ref={ref} {...props} />;
 });
 
 export default function PhotoGallery() {
 	const theme = useTheme();
-	const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [photoItemData, setPhotoItemData] = useState([]);
+
+	useEffect(() => {
+		client
+			.getEntries({
+				content_type: 'photoPagePost',
+				include: 5,
+			})
+			.then((response) => {
+				let initialPhotoItemData = response.items.map((entry) => {
+					const imageUrl =
+						'https:' + entry.fields.media.fields.file.url;
+					return {
+						img: imageUrl,
+						title: entry.fields.title,
+						rows: entry.fields.rows,
+						cols: entry.fields.columns,
+						order: entry.fields.order,
+					};
+				});
+
+				// Sort by the 'order' field
+				initialPhotoItemData.sort((a, b) => a.order - b.order);
+
+				setPhotoItemData(initialPhotoItemData);
+			})
+			.catch(console.error);
+	}, []);
 
 	const handleImageClick = (image) => {
 		setSelectedImage(image);
@@ -35,28 +58,36 @@ export default function PhotoGallery() {
 	return (
 		<>
 			<ImageList
-				sx={{ width: 'auto', height: 'auto' }}
+				sx={{
+					width: 'auto',
+					height: 'auto',
+					'@media (min-width: 600px)': {
+						cols: 5,
+						rowHeight: 160,
+					},
+					'@media (min-width: 900px)': {
+						cols: 6,
+					},
+				}}
 				variant='quilted'
-				cols={isDesktop ? 6 : 4} // Adjust columns based on viewport
-				rowHeight={isDesktop ? 150 : 121} // Adjust row height for desktop
+				cols={4}
+				rowHeight={121}
 			>
-				{itemData.map((item) => (
+				{photoItemData.map((item, index) => (
 					<ImageListItem
-						key={item.title}
+						key={item.img + Math.random(999) || index}
 						cols={item.cols || 1}
 						rows={item.rows || 1}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
 						}}
 						onClick={() => handleImageClick(item.img)}
 					>
 						<img
-							{...srcset(
-								item.img,
-								isDesktop ? 150 : 121,
-								item.rows,
-								item.cols
-							)}
+							src={item.img}
 							alt={item.title}
 							loading='eager'
 							style={{
@@ -80,18 +111,18 @@ export default function PhotoGallery() {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
-							border: `3px solid ${theme.palette.primary.main}`,
+							padding: 0.6,
+							border: `1px solid ${theme.palette.primary.main}`,
 						}}
 					>
 						<img
-							{...srcset(selectedImage, 600)}
+							src={selectedImage}
 							alt={selectedImage}
 							style={{
 								maxWidth: '100%',
 								maxHeight: '100%',
 								objectFit: 'contain',
 								cursor: 'pointer',
-								borderRadius: 'none',
 							}}
 							onClick={handleClose}
 						/>
@@ -101,132 +132,3 @@ export default function PhotoGallery() {
 		</>
 	);
 }
-
-const itemData = [
-	{
-		img: 'https://images.unsplash.com/photo-1654541696896-bd5d8feed3fb',
-		title: 'lighthouse',
-		rows: 1,
-		cols: 1,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-		title: 'Breakfast',
-		rows: 1,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-		title: 'Burger',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-		title: 'Camera',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-		title: 'Coffee',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-		title: 'Hats',
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-		title: 'Honey',
-		author: '@arwinneil',
-		rows: 2,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-		title: 'Basketball',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-		title: 'Fern',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-		title: 'Mushrooms',
-		rows: 2,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-		title: 'Tomato basil',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-		title: 'Sea star',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-		title: 'Bike',
-		cols: 4,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1654541696896-bd5d8feed3fb',
-		title: 'lighthouse',
-		rows: 1,
-		cols: 1,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-		title: 'Breakfast',
-		rows: 1,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-		title: 'Burger',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-		title: 'Camera',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-		title: 'Coffee',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-		title: 'Hats',
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-		title: 'Honey',
-		author: '@arwinneil',
-		rows: 2,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-		title: 'Basketball',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-		title: 'Fern',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-		title: 'Mushrooms',
-		rows: 2,
-		cols: 2,
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-		title: 'Tomato basil',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-		title: 'Sea star',
-	},
-	{
-		img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-		title: 'Bike',
-		cols: 4,
-	},
-];
