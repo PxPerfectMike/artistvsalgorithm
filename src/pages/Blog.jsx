@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import BlogPost from '../components/BlogPost';
 import TitleTop from '../components/TitleTop';
 

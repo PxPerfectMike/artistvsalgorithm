@@ -10,7 +10,7 @@ function Videog() {
 		<Container
 			sx={{
 				maxWidth: '1280px',
-				margin: '0 auto',
+				margin: '20px auto',
 				width: '100%',
 				height: '100%',
 				backgroundColor: '#070606',

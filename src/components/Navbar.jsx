@@ -19,15 +19,14 @@ const navItems = [
 
 export default function Navbar() {
 	const { pathname } = useLocation();
-	const initialValue =
-		navItems.findIndex((item) => item.link === pathname) || 2;
-
-	const [value, setValue] = React.useState(initialValue);
+	const initialValue = navItems.findIndex((item) => item.link === pathname);
+	const [value, setValue] = React.useState(
+		initialValue !== -1 ? initialValue : 2
+	);
 
 	React.useEffect(() => {
-		const newIndex =
-			navItems.findIndex((item) => item.link === pathname) || 2;
-		setValue(newIndex);
+		const newIndex = navItems.findIndex((item) => item.link === pathname);
+		setValue(newIndex !== -1 ? newIndex : 2);
 	}, [pathname]);
 
 	return (

@@ -70,39 +70,25 @@ export default function BlogPost() {
 					<ImageListItem
 						key={index}
 						cols={item.cols || 4}
-						rows={item.rows || item.text.length / 100}
+						rows={Math.floor(item.text.length) / 100}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
 						}}
-						onClick={() => item.img && handleImageClick(item.img)}
 					>
-						{item.type === 'text' ? (
-							<Typography
-								variant='h6'
-								color='primary'
-								sx={{
-									padding: '1rem',
-									width: '100vw',
-									textAlign: 'center',
-								}}
-							>
-								{documentToReactComponents(item.text)}
-							</Typography>
-						) : (
-							<img
-								{...srcset(item.img)}
-								alt={item.title}
-								loading='eager'
-								style={{
-									width: '100%',
-									height: '100%',
-									cursor: 'pointer',
-								}}
-							/>
-						)}
+						<Typography
+							variant='h6'
+							color='primary'
+							sx={{
+								padding: '1rem',
+								width: '100vw',
+								textAlign: 'center',
+							}}
+						>
+							{documentToReactComponents(item.text)}
+						</Typography>
 					</ImageListItem>
 				))}
 			</ImageList>
@@ -125,7 +111,7 @@ export default function BlogPost() {
 						<img
 							{...srcset(selectedImage)}
 							alt={selectedImage}
-							style={{
+							sx={{
 								maxWidth: '100%',
 								maxHeight: '100%',
 								objectFit: 'contain',

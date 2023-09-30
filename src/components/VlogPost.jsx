@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-	Box,
-	Dialog,
-	Typography,
-	Button,
-	DialogContent,
-	DialogTitle,
-} from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
