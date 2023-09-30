@@ -90,7 +90,7 @@ export default function PhotoGallery() {
 							src={item.img}
 							alt={item.title}
 							loading='eager'
-							style={{
+							sx={{
 								width: '100%',
 								height: '100%',
 								cursor: 'pointer',

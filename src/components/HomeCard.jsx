@@ -95,7 +95,7 @@ export default function HomeCard() {
 			>
 				{itemData.map((item, index) => (
 					<ImageListItem
-						key={item.img || index}
+						key={item.img + Math.random(999) || index}
 						cols={item.cols || 1}
 						rows={item.rows || 1}
 						sx={{
@@ -127,6 +127,8 @@ export default function HomeCard() {
 									width: '100%',
 									height: '100%',
 									cursor: 'pointer',
+									outline: 'none',
+									WebkitTapHighlightColor: 'transparent',
 								}}
 							/>
 						)}

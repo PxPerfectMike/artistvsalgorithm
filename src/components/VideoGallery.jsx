@@ -80,13 +80,13 @@ export default function VideoGallery() {
 				}}
 				variant='quilted'
 				cols={isDesktop ? 12 : 4} // For desktop use 6 columns, for mobile keep it at 4
-				rowHeight={121}
+				rowHeight={100}
 			>
 				{itemData.map((item) => (
 					<ImageListItem
 						key={item.title}
 						cols={item.cols || 4}
-						rows={item.rows || 1.5}
+						rows={item.rows || 2}
 						sx={{
 							border: `3px solid ${theme.palette.primary.main}`,
 							position: 'relative',
